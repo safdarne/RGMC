@@ -97,7 +97,7 @@
            
 %% Find the required canvas size 
 [minX, minY, maxX, maxY] = findCanvasSize(tforms, size(imgB));
-
+%%
 tempref = imref2d(double(([(abs(maxY-minY)+1),(abs(maxX-minX)+1)])));
 tempref.XWorldLimits = [minX maxX];
 tempref.YWorldLimits = [minY maxY];   
@@ -111,10 +111,10 @@ writerObj.FrameRate = vidObj.FrameRate;
 open(writerObj)
 
 clear Hcumulative;
-Hcumulativ = eye(3);
+Hcumulative = eye(3);
 
 endF = size(tforms,2);
-for j=2 : 1 : endF
+for j = 2 : 1 : endF
     disp(['Writing frame ', num2str(j), ' ...'])
     if (~isempty(tforms{j}))
         imgB = read(vidObj,j);
@@ -132,7 +132,16 @@ for j=2 : 1 : endF
         imshow(overlaid);axis equal; axis tight;axis off;
         title('Final result')
         drawnow
-        writeVideo(writerObj,overlaid);
+ 
+        scaleX = 1086 / size(overlaid, 1);
+        scaleY = 1918 / size(overlaid, 2);
+        scale = min([1, scaleX, scaleY]);
+        if (scale ~= 1)
+            overlaidResized = imresize(overlaid, scale);
+        else
+            overlaidResized = overlaid;
+        end
+        writeVideo(writerObj,overlaidResized);
     end
 end   
 close(writerObj)

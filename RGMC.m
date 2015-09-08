@@ -3,8 +3,8 @@
     mkdir(outputVideoPath)
     outputFilePath =  ('.\outputFiles\');
     mkdir(outputFilePath)    
-    datapath =  ('M:\Morteza\MSU\Conferences\BMVC2015\SampleVideos\');     
-    fileName = '5727___01310bf9ade34121b4bb815c1fee4e8f.mp4.mp4.avi';
+    datapath =  ('C:\SampleVideos\');     
+    fileName = 'input.mp4';
     
     % Canvas size, relative to the original video size
     posSpanX = 2; % Sum of absolute of posSpanX and negSpanX should not exceed 4
@@ -21,12 +21,12 @@
     
     % RGMC parameters
     alpha = 0.5;            
-    tforms = {};
     step = 1;               % Process only frames 1+i * step 
     T_E = 2;                % Max. error handling iterations
     T_C = 50;               % Max. cluster analysis iterations
     T_M = 100;              % Max. cluster merging iterations
     etta = 1.5;             % Error tolerance
+    tforms = {};
     while (ii + step) < vidObj.NumberOfFrames-1 && ((ii + step) <= endFrame)
         disp('---------------------')
         tic

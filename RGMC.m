@@ -106,7 +106,7 @@ tempref.YWorldLimits = [minY maxY];
 overlaid = uint8(zeros(abs(maxY-minY)+1, abs(maxX-minX)+1,3));
 
 se = strel('disk', 10);     
-writerObj = VideoWriter([outputVideoPath,'\2RGMCd_',fileName],'MPEG-4'); 
+writerObj = VideoWriter([outputVideoPath,'\RGMCd_',fileName],'MPEG-4'); 
 writerObj.FrameRate = vidObj.FrameRate;
 open(writerObj)
 

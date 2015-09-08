@@ -111,19 +111,19 @@ writerObj.FrameRate = vidObj.FrameRate;
 open(writerObj)
 
 clear Hcumulative;
-Hcumulative{1} = eye(3);
+Hcumulativ = eye(3);
 
 endF = size(tforms,2);
 for j=2 : 1 : endF
     disp(['Writing frame ', num2str(j), ' ...'])
     if (~isempty(tforms{j}))
         imgB = read(vidObj,j);
-        Hcumulative{j} = Hcumulative{j - 1} * tforms{j};
+        Hcumulative = tforms{j} * Hcumulative;
         imgB = imresize(imgB, resizeFactor);
-        imgBp = imwarp(imgB, projective2d(Hcumulative{j}), 'linear', 'OutputView', tempref); 
+        imgBp = imwarp(imgB, projective2d(Hcumulative), 'linear', 'OutputView', tempref); 
         % Update "only" those pixels in the overlaied image which correspond to
         % the transformed pixels from current frame        
-        borderP = imwarp(ones(size(imgB)), projective2d(Hcumulative{j}), 'linear','OutputView', tempref);
+        borderP = imwarp(ones(size(imgB)), projective2d(Hcumulative), 'linear','OutputView', tempref);
         temp = borderP > 0;                    
         erodedTemp = imerode(temp,se);
         overlaid(erodedTemp) = imgBp(erodedTemp);
